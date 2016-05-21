@@ -6,10 +6,12 @@ let Posts = new React.createClass({
 	getInitialState(){
 		return {
 			posts: [{
+				id: 1,
 				text: 'Some text here',
 				name: 'user one'
 			},
 			{
+				id: 2,
 				text: 'Another text here',
 				name: 'user two'
 			}]
@@ -19,9 +21,9 @@ let Posts = new React.createClass({
 	render(){
 		return (
 			<div>
-				{this.state.posts.map( post => {
-					<Post name={post.name} text={post.text} />
-				})}
+				{ this.state.posts.map( post => {
+					return <Post key={post.id} n={post.name} t={post.text} />
+				}) }
 			</div>
 		)
 	}

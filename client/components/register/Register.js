@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-//import { RouterContext } from 'react-router'
 import { browserHistory, Router, Route, Link, withRouter } from 'react-router'
 import Auth  from '../../auth/auth'
 import { connect } from 'react-redux'

@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 
 let Post = new React.createClass({
 	render(){
-		<div>
-			{ this.props.name }
-			<p/>
-			{ this.props.text }
-		</div>
+		return (
+			<div>
+				<h3>{ this.props.n } </h3>
+				<p/>
+				<h3> { this.props.t } </h3>
+			</div>
+		)
 	}
 });
 
