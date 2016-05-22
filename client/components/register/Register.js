@@ -6,32 +6,32 @@ import store from '../../redux/store'
 import { storeToken } from '../../redux/actions'
 import * as actionCreators from '../../redux/actions'
 import { bindActionCreators } from 'redux'
+import { Form } from 'formsy-react'
+import Input from '../input/Input'
 
 const url = '/api/users'
 
 let Register = new React.createClass({
 
 
-	handleSubmit(e) {
-		e.preventDefault();
-
+	handleSubmit(data) {
+		console.log('data in handle: ' + JSON.stringify(data));
 		this.setState({
 			type: 'info',
 			message: 'Sending info ...'
 		});
-		// fetch form data
+		/*// fetch form data
 		let formData = {
 			email: this.state.email.trim(),
 			password: this.state.password.trim()
-		};
+		};*/
 		//TODO: better validation
-		if(formData.email === '' || formData.password === ''){
+		/*if(formData.email === '' || formData.password === ''){
 			this.setState({type: 'error', message: 'Validation Error'});
 			return;
-		}
-		console.log('consoling form data: ' + JSON.stringify(formData));
+		}*/
 
-		Auth.register(formData, (err, res) => {
+		Auth.register(data, (err, res) => {
 			if(err || !res){
 				//TODO: handle error
 			} else{
@@ -49,11 +49,8 @@ let Register = new React.createClass({
 
 				if (location.state && location.state.nextPathname) {
 					browserHistory.push(location.state.nextPathname)
-					//this.context.transitionTo(location.state.nextPathname)
 				} else {
 					browserHistory.push('/home')
-					//this.props.router.replace('/home')
-					//this.context.transitionTo('home')
 				}
 				
 			}
@@ -69,11 +66,21 @@ let Register = new React.createClass({
     	this.setState({password: e.target.value});
   	},
 
+  	enableButton() {
+  		this.setState({ canSubmit: true });
+  	},
+
+  	disableButton() {
+  		this.setState({ canSubmit: false });
+  	},
+
 	getInitialState(){
 		return{
 			loggedIn: Auth.loggedIn(),
 			email: '',
-			password: ''
+			password: '',
+			name: '',
+			canSubmit: false
 		}
 	},
 
@@ -85,7 +92,6 @@ let Register = new React.createClass({
 
 	componentWillMount() {
     	//Auth.onChange = this.updateAuth
-    	//Auth.login()
   	},
 
 	render() {
@@ -97,20 +103,25 @@ let Register = new React.createClass({
   		}
 		return (
 			<div className='container'>
-				<form onSubmit={this.handleSubmit}>
-					<input type='text' name='email' className='form-control' 
-						placeholder='Email' value={this.state.email} 
-						onChange={this.handleEmailChange} required/>
+				<Form onSubmit={this.handleSubmit} onValid={this.enableButton} onInvalid={this.disableButton} className="register">
+					<Input type='text' name='name' className='form-control' 
+						placeholder='Full Name' value={this.state.name} title='Name'
+						required/>
+
+					<Input type='text' name='email' className='form-control' 
+						placeholder='Email' value={this.state.email} title='Email'
+						validations="isEmail" validationError="This is not a valid email" 
+						required/>
 					<p/>
-					<input type='password' name='password' className='form-control' 
-						placeholder='Password' value={this.state.password} 
-						onChange={this.handlePasswordChange} required/>
+					<Input type='password' name='password' className='form-control' 
+						placeholder='Password' value={this.state.password} title='Password'
+						required/>
 					<p/>
-					<button >Register</button>	
+					<button type="submit" disabled={!this.state.canSubmit} >Register</button>	
 					{status} 
 					<p/>
 					<Link to='/login'>Login</Link>
-				</form>
+				</Form>
 			</div>
 		)
 	}

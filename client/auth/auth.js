@@ -25,7 +25,7 @@ let Auth = {
 
   login(formData, callback){
     request.post('/auth/local', formData)
-      .end( (er, res) => {
+      .end( (err, res) => {
         if(err || !res){
           // TODO: handle failure appropriately
           console.log('error logging in')

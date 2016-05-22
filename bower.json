@@ -1,0 +1,25 @@
+{
+  "name": "facebook-basic",
+  "description": "a very basic facebook example based on react, redux, express and mongoDB(mongoose)",
+  "main": "server/server.js",
+  "authors": [
+    "Masaud Yakubu <sophismay@gmail.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "formsy-react": "^0.18.0"
+  }
+}

@@ -25,7 +25,7 @@ let Posts = new React.createClass({
 					return <Post key={post.id} n={post.name} t={post.text} />
 				}) }
 			</div>
-			<hr/>
+			
 		)
 	}
 });

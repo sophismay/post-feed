@@ -6,30 +6,32 @@ import store from '../../redux/store'
 import { storeToken } from '../../redux/actions'
 import * as actionCreators from '../../redux/actions'
 import { bindActionCreators } from 'redux'
+import { Form } from 'formsy-react'
+import Input from '../input/Input'
 
 let Login = new React.createClass({
 
-	handleSubmit(e){
-		e.preventDefault()
-
+	handleSubmit(data){
+		//e.preventDefault()
+		//console.log('data arg in handle: ' + JSON.stringify(data));
+		console.log('e arg in handle: ' + JSON.stringify(data));
 		this.setState({
 			type: 'info',
 			message: 'Sending info ...'
 		});
 		// fetch form data
-		let formData = {
+		/*let formData = {
 			email: this.state.email.trim(),
 			password: this.state.password.trim()
-		};
+		};*/
 
 		//TODO: better validation
-		if(formData.email === '' || formData.password === ''){
+		/*if(formData.email === '' || formData.password === ''){
 			this.setState({type: 'error', message: 'Validation Error'});
 			return;
-		}
-		console.log('consoling form data: ' + JSON.stringify(formData));
+		}*/
 
-		Auth.login(formData, (err, res) => {
+		Auth.login(data, (err, res) => {
 			if(err || !res){
 				//TODO: handle error
 				// clear form fields and set error message
@@ -40,6 +42,7 @@ let Login = new React.createClass({
 					message: 'Invalid email or password'
 				});
 			} else {
+				// TODO: clear form fields?
 				// store token and redirect user
 				store.dispatch(storeToken(res.token))
 				this.setState({ loggedIn: true })
@@ -64,9 +67,18 @@ let Login = new React.createClass({
     	this.setState({password: e.target.value});
   	},
 
+  	enableButton() {
+  		this.setState({ canSubmit: true });
+  	},
+
+  	disableButton() {
+  		this.setState({ canSubmit: false });
+  	},
+
   	getInitialState(){
 		return {
-			loggedIn: Auth.loggedIn()
+			loggedIn: Auth.loggedIn(),
+			canSubmit: false
 		}
 	},
 
@@ -84,20 +96,23 @@ let Login = new React.createClass({
   		}
 		return (
 			<div className='container'>
-				<form onSubmit={this.handleSubmit}>
-					<input type='text' name='email' className='form-control' 
-						placeholder='Email' value={this.state.email} 
-						onChange={this.handleEmailChange} required/>
+				<Form onSubmit={this.handleSubmit} onValid={this.enableButton} onInvalid={this.disableButton} className="login">
+					<Input type='text' name='email' className='form-control' 
+						placeholder='Email' value={this.state.email} title='Email'
+						validations="isEmail" validationError="This is not a valid email" required/>
 					<p/>
-					<input type='password' name='password' className='form-control' 
-						placeholder='Password' value={this.state.password} 
-						onChange={this.handlePasswordChange} required/>
-					<p/>
-					<button >Log In</button>	
-					
+					<Input type='password' name='password' className='form-control' 
+						placeholder='Password' value={this.state.password} title='Password'
+						required/>
+
 					{status} 
-					
-				</form>
+						
+					<p/>
+					<button type="submit" disabled={!this.state.canSubmit}>Log In</button>	
+
+					<p/>
+					<Link to='/register'>Register</Link>
+				</Form>
 			</div>
 		)
 	}
