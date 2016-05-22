@@ -7,7 +7,7 @@ import NoMatch from './components/nomatch/NoMatch'
 import store from './redux/store'
 import { Provider } from 'react-redux'
 import { browserHistory, Router, Route, Link, withRouter } from 'react-router'
-import Auth  from './auth/auth'
+import Auth from './auth/auth'
 
 /*let initialState = {
   todos: [{
@@ -39,14 +39,10 @@ render(
     <Router history={browserHistory}>
       <Route path='/' component={Counter} />
       <Route path='/register' component={Register} />
+      <Route path='/login' component={Login} />
       <Route path='/home' component={Posts} onEnter={requireAuth} />
       <Route path='/*' component={NoMatch} />
     </Router>
   </Provider>,
   document.getElementById('app')
 )
-
-/*<Router history={browserHistory}>
-      <Route path='/' component={Counter} />
-      <Route path='/register' component={Register} />
-    </Router>*/

@@ -4,7 +4,7 @@ import { storeToken } from '../redux/actions'
 import store from '../redux/store'
 
 let Auth = {
-  login(email, pass, cb) {
+  /*login(email, pass, cb) {
     cb = arguments[arguments.length - 1]
     if (localStorage.token) {
       if (cb) cb(true)
@@ -21,6 +21,20 @@ let Auth = {
         this.onChange(false)
       }
     })
+  },*/
+
+  login(formData, callback){
+    request.post('/auth/local', formData)
+      .end( (er, res) => {
+        if(err || !res){
+          // TODO: handle failure appropriately
+          console.log('error logging in')
+          return callback(err, null);
+        }else {
+          console.log('success logging in : ' + JSON.stringify(res))
+          return callback(null, res)
+        }
+      })
   },
 
   register(formData, callback) {
@@ -48,7 +62,7 @@ let Auth = {
       console.log('there was an error');
       console.log('error :' + err.toString());
       
-      if(callback) return callback(null);
+      if(callback) return callback(err, null);
     });
   },
 
