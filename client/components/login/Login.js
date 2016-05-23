@@ -45,12 +45,15 @@ let Login = new React.createClass({
 			} else {
 				// TODO: clear form fields?
 				// store token and redirect user
-				console.log('imported store: ' + JSON.stringify(this.props))
-				store.dispatch(storeToken(res.token))
+				//console.log('login route store: ' + JSON.stringify(this.props.route.store))
+				console.log('props store state before successful login: ' + JSON.stringify(this.props.state))
+				//let store = this.props.route.store
+				store.dispatch(storeToken(res.body.token))
+				//console.log('passed route store state after storeToken dispatch: ' + JSON.stringify(store.getState()))
 				store.dispatch(setLoggedIn(true))
-
-				console.log('store state after successful login: ' + JSON.stringify(this.props))
-				this.setState({ loggedIn: true })
+				//console.log('passed route store state after setLoggedIn dispatch: ' + JSON.stringify(store.getState()))
+				console.log('props store state after successful login: ' + JSON.stringify(this.props.state))
+				//this.setState({ loggedIn: true })
 
 				const { location } = this.props
 

@@ -1,7 +1,6 @@
 import $ from 'jquery'
 import request from 'superagent'
-import { storeToken } from '../redux/actions'
-//import store from '../redux/store'
+import store from '../redux/store'
 
 class Auth {
   constructor(){
@@ -9,21 +8,24 @@ class Auth {
   }
 
   static loggedIn() {
-    //return !!localStorage.token
-    //return store.getState().token ? true : false
-    return true
+    return store.getState().loggedIn
   }
 
-  static requireLogin(store, nextState, replace){
-    console.log('consoling logged state: ' + JSON.stringify(store))
-    console.log('consoling token state: ' + JSON.stringify(store.getState()))
-    if (!this.loggedIn) { 
+  static requireLogin(nextState, replace){
+
+    console.log('consoling imported store state: ' + JSON.stringify(store.getState()))
+    console.log('logged state wuithout this: ' + Auth.loggedIn())
+
+    if (!Auth.loggedIn) { 
       console.log('not logged in, replacing')
+      let nextPathname = nextState ? nextState.location.pathname : null
+      console.log('nextPathname: ' + nextPathname)
       replace({
         pathname: '/login',
-        state: { nextPathname: nextState.location.pathname }
+        state: { nextPathname: nextPathname }
       })
     }
+    //TODO: else get the current user
   }
 
   static login(formData, callback){
@@ -75,27 +77,6 @@ class Auth {
 }
 
 export default Auth
-
-//let Auth = {
-  /*login(email, pass, cb) {
-    cb = arguments[arguments.length - 1]
-    if (localStorage.token) {
-      if (cb) cb(true)
-      this.onChange(true)
-      return
-    }
-    pretendRequest(email, pass, (res) => {
-      if (res.authenticated) {
-        localStorage.token = res.token
-        if (cb) cb(true)
-        this.onChange(true)
-      } else {
-        if (cb) cb(false)
-        this.onChange(false)
-      }
-    })
-  },*/
-//}
 
    /*request.post('/api/users', 
       formData).end(function(err, res){

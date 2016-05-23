@@ -48,11 +48,11 @@ const mainReducer = (previousState, action) => {
 
     case 'SET_LOGGED_IN': 
       return Object.assign({}, previousState, 
-          { token: action.token })  
+          { loggedIn: action.loggedIn })  
 
     case 'REMOVE_TOKEN': 
       return Object.assign({}, previousState, 
-          { loggedIn: action.loggedIn })
+          { token: null })
 
     default:
       return previousState  

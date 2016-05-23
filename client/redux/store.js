@@ -11,14 +11,15 @@ export default function configureStore(initialState = { todos: [] }) {
   return finalCreateStore(reducer, initialState)
 }
 */
-console.log('reducer: ' + mainReducer)
+//console.log('reducer: ' + mainReducer)
 
 function configureStore(initialState = {token: null}){
 	return createStore(mainReducer, initialState);
 }
 
 let initialState = {
-  token: null
+  token: null,
+  loggedIn: false
 }
 
 const store = configureStore(initialState)
