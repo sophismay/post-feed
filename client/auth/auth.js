@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import request from 'superagent'
 import { storeToken } from '../redux/actions'
-import store from '../redux/store'
+//import store from '../redux/store'
 
 class Auth {
   constructor(){
@@ -10,12 +10,13 @@ class Auth {
 
   static loggedIn() {
     //return !!localStorage.token
-    return store.getState().token ? true : false
+    //return store.getState().token ? true : false
+    return true
   }
 
-  static requireLogin(nextState, replace){
-    console.log('consoling logged state: ' + store.getState().loggedIn)
-    console.log('consoling token state: ' + store.getState().loggedIn)
+  static requireLogin(store, nextState, replace){
+    console.log('consoling logged state: ' + JSON.stringify(store))
+    console.log('consoling token state: ' + JSON.stringify(store.getState()))
     if (!this.loggedIn) { 
       console.log('not logged in, replacing')
       replace({

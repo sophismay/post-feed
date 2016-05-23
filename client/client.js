@@ -38,10 +38,10 @@ import Auth from './auth/auth'
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path='/' component={App} >
-        <Route path='register' component={Register} />
-        <Route path='login' component={Login} />
-        <Route path='home' component={Posts} onEnter={Auth.requireLogin} />
+      <Route path='/' component={App} store={store}>
+        <Route path='register' component={Register} store={store} />
+        <Route path='login' component={Login} store={store} />
+        <Route path='home' component={Posts} onEnter={Auth.requireLogin(store)} />
         <Route path='*' component={NoMatch} />
       </Route>
     </Router>

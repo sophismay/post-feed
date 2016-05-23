@@ -1,5 +1,5 @@
 import { applyMiddleware, compose, createStore } from 'redux'
-import reducer from './reducer'
+import mainReducer from './reducer'
 import logger from 'redux-logger'
 
 /*let finalCreateStore = compose(
@@ -11,18 +11,18 @@ export default function configureStore(initialState = { todos: [] }) {
   return finalCreateStore(reducer, initialState)
 }
 */
-console.log('reducer: ' + reducer)
+console.log('reducer: ' + mainReducer)
 
 function configureStore(initialState = {token: null}){
-	return createStore(reducer, initialState);
+	return createStore(mainReducer, initialState);
 }
 
 let initialState = {
   token: null
 }
 
-let store = configureStore(initialState)
+const store = configureStore(initialState)
 
-console.log('getting state: ' + JSON.stringify(store.getState()));
+console.log('getting init state: ' + JSON.stringify(store.getState()));
 
 export default store

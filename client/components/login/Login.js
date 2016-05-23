@@ -45,8 +45,11 @@ let Login = new React.createClass({
 			} else {
 				// TODO: clear form fields?
 				// store token and redirect user
+				console.log('imported store: ' + JSON.stringify(this.props))
 				store.dispatch(storeToken(res.token))
 				store.dispatch(setLoggedIn(true))
+
+				console.log('store state after successful login: ' + JSON.stringify(this.props))
 				this.setState({ loggedIn: true })
 
 				const { location } = this.props
@@ -122,8 +125,12 @@ let Login = new React.createClass({
 	}
 });
 
-function mapStateToProps(state){
-	return { token: state.token }
+function mapStateToProps(state, props){
+	return { 
+		token: state.token,
+		state: state,
+		propsStore: props.store
+	}
 }
 
 function mapDispatchToProps(dispatch){
