@@ -4,8 +4,13 @@ import NavBar from '../navbar/NavBar'
 let App = new React.createClass({
 
 	render(){
-		return(
-			<NavBar />
+		const children = this.props.children
+		return (
+			<div>
+				<NavBar />
+
+	        	{this.props.children}	
+        	</div>		
 		)
 	}
 });

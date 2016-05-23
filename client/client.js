@@ -38,7 +38,7 @@ import Auth from './auth/auth'
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path='/' component={App} />
+      <Route path='/' component={App} >
         <Route path='register' component={Register} />
         <Route path='login' component={Login} />
         <Route path='home' component={Posts} onEnter={Auth.requireLogin} />
