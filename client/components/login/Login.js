@@ -8,6 +8,7 @@ import * as actionCreators from '../../redux/actions'
 import { bindActionCreators } from 'redux'
 import { Form } from 'formsy-react'
 import Input from '../input/Input'
+import { Button } from 'react-bootstrap'
 
 let Login = new React.createClass({
 
@@ -108,7 +109,7 @@ let Login = new React.createClass({
 					{status} 
 						
 					<p/>
-					<button type="submit" disabled={!this.state.canSubmit}>Log In</button>	
+					<Button type="submit" disabled={!this.state.canSubmit}>Log In</Button>	
 
 					<p/>
 					<Link to='/register'>Register</Link>
