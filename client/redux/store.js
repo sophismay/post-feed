@@ -11,6 +11,7 @@ export default function configureStore(initialState = { todos: [] }) {
   return finalCreateStore(reducer, initialState)
 }
 */
+console.log('reducer: ' + reducer)
 
 function configureStore(initialState = {token: null}){
 	return createStore(reducer, initialState);

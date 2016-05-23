@@ -45,3 +45,10 @@ export const removeToken = () => {
     token: null
   }
 }
+
+export const setLoggedIn = (loggedIn) => {
+  return {
+    type: 'SET_LOGGED_IN',
+    loggedIn
+  }
+}

@@ -3,7 +3,7 @@ import { browserHistory, Router, Route, Link, withRouter } from 'react-router'
 import Auth  from '../../auth/auth'
 import { connect } from 'react-redux'
 import store from '../../redux/store'
-import { storeToken } from '../../redux/actions'
+import { storeToken, setLoggedIn } from '../../redux/actions'
 import * as actionCreators from '../../redux/actions'
 import { bindActionCreators } from 'redux'
 import { Form } from 'formsy-react'
@@ -46,13 +46,16 @@ let Login = new React.createClass({
 				// TODO: clear form fields?
 				// store token and redirect user
 				store.dispatch(storeToken(res.token))
+				store.dispatch(setLoggedIn(true))
 				this.setState({ loggedIn: true })
 
 				const { location } = this.props
 
 				if (location.state && location.state.nextPathname) {
+					console.log('using next pathname: ' + location.state.nextPathname)
 					browserHistory.push(location.state.nextPathname)
 				} else {
+					console.log('using home')
 					browserHistory.push('/home')
 				}
 			}

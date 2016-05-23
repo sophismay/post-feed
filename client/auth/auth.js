@@ -14,7 +14,9 @@ class Auth {
   }
 
   static requireLogin(nextState, replace){
-    if (!this.loggedIn) {
+    console.log('consoling logged state: ' + store.getState().loggedIn)
+    console.log('consoling token state: ' + store.getState().loggedIn)
+    if (!this.loggedIn) { 
       console.log('not logged in, replacing')
       replace({
         pathname: '/login',

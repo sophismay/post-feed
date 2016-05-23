@@ -40,19 +40,23 @@ export default reducer*/
 
 'use strict';
 
-const token = (previousState, action) => {
+const mainReducer = (previousState, action) => {
   switch(action.type){
     case 'STORE_TOKEN': 
       return Object.assign({}, previousState, 
-          {token: action.token})
+          { token: action.token })
+
+    case 'SET_LOGGED_IN': 
+      return Object.assign({}, previousState, 
+          { token: action.token })  
 
     case 'REMOVE_TOKEN': 
       return Object.assign({}, previousState, 
-          {token: null})
+          { loggedIn: action.loggedIn })
 
     default:
       return previousState  
   }
 }
 
-export default token
+export default mainReducer
