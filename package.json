@@ -25,6 +25,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "react": "^15.0.2",
+    "react-bootstrap": "^0.29.4",
     "react-dom": "^15.0.2",
     "react-redux": "^4.4.0",
     "react-router": "^2.4.0",

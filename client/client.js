@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import Counter from './components/counter/Counter'
+import App from './components/app/App'
 import Register from './components/register/Register'
 import Login from './components/login/Login'
 import Posts from './components/posts/Posts'
@@ -24,7 +24,7 @@ import Auth from './auth/auth'
 
 //let store = configureStore(initialState)
 
-function requireAuth(nextState, replace) {
+/*function requireAuth(nextState, replace) {
   console.log('inside require auth: ' + Auth.loggedIn())
   if (!Auth.loggedIn()) {
     console.log('not logged in, replacing')
@@ -33,16 +33,17 @@ function requireAuth(nextState, replace) {
       state: { nextPathname: nextState.location.pathname }
     })
   }
-}
+}*/
 
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path='/' component={Counter} />
-      <Route path='/register' component={Register} />
-      <Route path='/login' component={Login} />
-      <Route path='/home' component={Posts} onEnter={requireAuth} />
-      <Route path='/*' component={NoMatch} />
+      <Route path='/' component={App} />
+        <Route path='register' component={Register} />
+        <Route path='login' component={Login} />
+        <Route path='home' component={Posts} onEnter={Auth.requireLogin} />
+        <Route path='*' component={NoMatch} />
+      </Route>
     </Router>
   </Provider>,
   document.getElementById('app')

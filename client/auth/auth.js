@@ -23,6 +23,17 @@ let Auth = {
     })
   },*/
 
+  requireLogin(nextState, replace){
+    console.log('inside require auth: ' + Auth.loggedIn())
+    if (!this.loggedIn()) {
+      console.log('not logged in, replacing')
+      replace({
+        pathname: '/register',
+        state: { nextPathname: nextState.location.pathname }
+      })
+    }
+  },
+
   login(formData, callback){
     request.post('/auth/local', formData)
       .end( (err, res) => {
