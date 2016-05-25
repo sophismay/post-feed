@@ -2,9 +2,13 @@
 
 import { combineReducers } from 'redux'
 import { REQUEST_POSTS, RECEIVE_POSTS, LOGIN_REQUEST, 
-  LOGIN_SUCCESS, LOGIN_FAILURE, POST_REQUEST, POST_SUCCESS, POST_FAILURE } from './actions'
+  LOGIN_SUCCESS, LOGIN_FAILURE, POST_REQUEST, POST_SUCCESS, POST_FAILURE, 
+  REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE } from './actions'
 
-const mainReducer = (previousState, action) => {
+const mainReducer = (previousState = {
+  token: null,
+  loggedIn: false
+}, action) => {
   switch(action.type){
     case 'STORE_TOKEN': 
       return Object.assign({}, previousState, 
@@ -49,11 +53,30 @@ const auth = (state = {
         isAuthenticated: false,
         errorMessage: action.message
       })
-    case LOGOUT_SUCCESS:
+    /*case LOGOUT_SUCCESS:
       return Object.assign({}, state, {
         isFetching: true,
         isAuthenticated: false
+      })*/
+    case REGISTER_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true,
+        isAuthenticated: false,
+        user: action.credentials
       })
+    case REGISTER_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isAuthenticated: true,
+        errorMessage: ''
+      })  
+    case REGISTER_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isAuthenticated: false,
+        errorMessage: action.message
+      })  
+    // user should be stored in localStorage  
     default:
       return state
   }
@@ -62,7 +85,7 @@ const auth = (state = {
 const posts = (state = {
     isFetching: false,
     posts: [],
-    authenticated: false}, action) {
+    authenticated: false}, action) => {
 
   switch (action.type) {
     case POST_REQUEST:

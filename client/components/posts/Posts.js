@@ -21,8 +21,8 @@ let Posts = new React.createClass({
 	},
 
 	componentDidMount(){
-		store.dispatch(fetchPosts())
-		console.log('store state after fetchPosts: ' + store.getState())
+		//store.dispatch(fetchPosts())
+		//console.log('store state after fetchPosts: ' + store.getState())
 	},
 
 	componentWillUnmount(){

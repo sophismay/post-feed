@@ -1,10 +1,14 @@
 import store from './store'
 import fetch from 'isomorphic-fetch'
 import { CALL_API } from '../middleware/post'
-
+import { browserHistory } from 'react-redux'
 
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
+
+export const REGISTER_REQUEST = 'REGISTER_REQUEST'
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
+export const REGISTER_FAILURE = 'REGISTER_FAILURE'
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
@@ -18,7 +22,34 @@ export const POST_REQUEST = 'POST_REQUEST'
 export const POST_SUCCESS = 'POST_SUCCESS'
 export const POST_FAILURE = 'POST_FAILURE'
 
-export const requestLogin = (credentials) {
+export const requestRegister = (credentials) => {
+  return {
+    type: REGISTER_REQUEST,
+    isFetching: true,
+    isAuthenticated: false,
+    credentials
+  }
+}
+
+export const receiveRegister = (user) => {
+  return {
+    type: REGISTER_SUCCESS,
+    isFetching: false,
+    isAuthenticated: true,
+    token: user.token
+  }
+}
+
+export const registerError = (message) => {
+  return {
+    type: REGISTER_FAILURE,
+    isFetching: false,
+    isAuthenticated: false,
+    message
+  }
+}
+
+export const requestLogin = (credentials) => {
   return {
     type: LOGIN_REQUEST,
     isFetching: true,
@@ -32,7 +63,7 @@ export const receiveLogin = (user) => {
     type: LOGIN_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
-    id_token: user.id_token
+    token: user.token
   }
 }
 
@@ -53,7 +84,7 @@ export const requestLogout = () => {
   }
 }
 
-export const receiveLogout() => {
+export const receiveLogout = () => {
   return {
     type: LOGOUT_SUCCESS,
     isFetching: false,
@@ -97,7 +128,7 @@ export const receivePosts = (posts) => {
   }
 }
 
-export const fetchPosts = () => {
+/*export const fetchPosts = () => {
   
   return dispatch => {
     store.dispatch(requestPosts())
@@ -105,7 +136,7 @@ export const fetchPosts = () => {
       .then(response => response.json())
       .then(json => store.dispatch(receivePosts(json)))
   }
-}
+}*/
 
 
 // Calls the API to get a token and
@@ -120,7 +151,7 @@ export const loginUser = (creds) => {
 
   return dispatch => {
     // We dispatch requestLogin to kickoff the call to the API
-    let dispatch = store.dispatch
+    
     dispatch(requestLogin(creds))
 
     return fetch('http://localhost:3001/api/auth/local', config)
@@ -134,9 +165,46 @@ export const loginUser = (creds) => {
           return Promise.reject(user)
         } else {
           // If login was successful, set the token in local storage
-          localStorage.setItem('id_token', user.id_token)
+          localStorage.setItem('token', user.token)
           // Dispatch the success action
           dispatch(receiveLogin(user))
+        }
+      }).catch(err => console.log("Error: ", err))
+  }
+}
+
+export const registerUser = (creds) => {
+  let config = {
+    method: 'POST',
+    headers: { 'Content-Type':'application/x-www-form-urlencoded' },
+    body: `email=${creds.email}&password=${creds.password}&name=${creds.name}`
+  }
+  console.log('called register user')
+  return dispatch => {
+    console.log('in curried call')
+    dispatch(requestRegister(creds))
+    console.log('store state after requestRegister dispatch: ' + 
+      JSON.stringify(store.getState()))
+
+    return fetch('http://localhost:3001/api/users', config)
+      .then(response =>
+        response.json().then(user => ({ user, response }))
+            ).then(({ user, response }) =>  {
+        if (!response.ok) {
+          // If there was a problem, we want to
+          // dispatch the error condition
+          dispatch(registerError(user.message))
+          return Promise.reject(user)
+        } else {
+          // If register was successful, set the token in local storage
+
+          localStorage.setItem('token', user.token)
+          localStorage.setItem('user', user)
+          console.log('local storage: ' + JSON.stringify(localStorage))
+          // Dispatch the success action
+          dispatch(receiveRegister(user))
+          console.log('store state after receiveRegister dispatch: ' + JSON.stringify(store.getState()))
+          console.log('user after receiveRegister dispatch: ' + JSON.stringify(user))
         }
       }).catch(err => console.log("Error: ", err))
   }
@@ -145,10 +213,12 @@ export const loginUser = (creds) => {
 // Logs the user out
 export const logoutUser = () => {
   return dispatch => {
-    let dispatch = store.dispatch
+    
     dispatch(requestLogout())
-    localStorage.removeItem('id_token')
+    localStorage.removeItem('token')
     dispatch(receiveLogout())
+
+    browserHistory.push('/login')
   } 
 }
 

@@ -39,8 +39,8 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path='/' component={App} store={store}>
-        <Route path='register' component={Register} />
-        <Route path='login' component={Login}  />
+        <Route path='register' component={Register} onEnter={Auth.requireNotLoggedIn} />
+        <Route path='login' component={Login}  onEnter={Auth.requireNotLoggedIn} />
         <Route path='home' component={Posts} onEnter={Auth.requireLogin} />
         <Route path='*' component={NoMatch} />
       </Route>

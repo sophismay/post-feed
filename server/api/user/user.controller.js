@@ -53,7 +53,7 @@ exports.create = function(req, res, next) {
         expiresIn: '60m'
       });
       // adding user to response
-      res.json({ token: token, user: user });
+      res.json({ token: token, user: newUser });
     })
     .catch(validationError(res));
 };

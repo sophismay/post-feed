@@ -14,7 +14,7 @@ export default function configureStore(initialState = { todos: [] }) {
 //console.log('reducer: ' + mainReducer)
 
 function configureStore(initialState = {token: null}){
-	return createStore(fbApp, initialState);
+	return createStore(fbApp);
 }
 
 let initialState = {
@@ -24,6 +24,6 @@ let initialState = {
 
 const store = configureStore(initialState)
 
-console.log('getting init state: ' + JSON.stringify(store.getState()));
+//console.log('getting init state: ' + JSON.stringify(store.getState()));
 
 export default store

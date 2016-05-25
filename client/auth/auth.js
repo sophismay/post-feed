@@ -8,7 +8,16 @@ class Auth {
   }
 
   static loggedIn() {
-    return store.getState().loggedIn
+    //return store.getState().loggedIn
+    return localStorage.token ? true : false
+  }
+
+  static requireNotLoggedIn(nextState, replace){
+    if(!Auth.loggedIn){
+      let nextPathname = nextState ? nextState.location.pathname : ''
+      alert('you have to log out first')
+      // TODO: make a log out request
+    }
   }
 
   static requireLogin(nextState, replace){
@@ -16,9 +25,9 @@ class Auth {
     console.log('consoling imported store state: ' + JSON.stringify(store.getState()))
     console.log('logged state wuithout this: ' + Auth.loggedIn())
 
-    if (!Auth.loggedIn) { 
+    if (!Auth.loggedIn()) { 
       console.log('not logged in, replacing')
-      let nextPathname = nextState ? nextState.location.pathname : null
+      let nextPathname = nextState ? nextState.location.pathname : ''
       console.log('nextPathname: ' + nextPathname)
       replace({
         pathname: '/login',

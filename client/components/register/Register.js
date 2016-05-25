@@ -3,7 +3,7 @@ import { browserHistory, Router, Route, Link, withRouter } from 'react-router'
 import Auth  from '../../auth/auth'
 import { connect } from 'react-redux'
 import store from '../../redux/store'
-import { storeToken } from '../../redux/actions'
+import { storeToken, registerUser } from '../../redux/actions'
 import * as actionCreators from '../../redux/actions'
 import { bindActionCreators } from 'redux'
 import { Form } from 'formsy-react'
@@ -13,6 +13,10 @@ import { Button } from 'react-bootstrap'
 const url = '/api/users'
 
 let Register = new React.createClass({
+
+	componentDidMount(){
+		//console.log('Register did mount: ' + JSON.stringify(this.props.token))
+	},
 
 
 	handleSubmit(data) {
@@ -32,7 +36,12 @@ let Register = new React.createClass({
 			return;
 		}*/
 
-		Auth.register(data, (err, res) => {
+		registerUser(data)(store.dispatch).then( () => {
+			console.log('I entered')
+			browserHistory.push('/home')
+		})
+
+		/*Auth.register(data, (err, res) => {
 			if(err || !res){
 				//TODO: handle error
 			} else{
@@ -40,7 +49,7 @@ let Register = new React.createClass({
 				// tell store a token action has taken place
 				store.dispatch(storeToken(res.token));
 
-				console.log('context: ' + JSON.stringify(Object.keys(this.context)));
+				console.log('store state: ' + JSON.stringify(store.getState()));
 				console.log('props: ' + JSON.stringify(this.props));
 
 				this.setState({
@@ -55,7 +64,7 @@ let Register = new React.createClass({
 				}
 				
 			}
-		});
+		});*/
 			
 	},
 
@@ -128,8 +137,18 @@ let Register = new React.createClass({
 	}
 });
 
-function mapStateToProps(state){
-	return { token: state.token }
+function mapStateToProps(state, props){
+	//return { token: state.token }
+	const { auth, mainReducer } = state
+	const { isFetching, isAuthenticated } = auth
+	const { token, loggedIn } = mainReducer
+
+	return {
+		isFetching,
+		isAuthenticated,
+		loggedIn,
+		token
+	}
 }
 
 function mapDispatchToProps(dispatch){
