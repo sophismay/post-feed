@@ -1,44 +1,8 @@
-/*function getId(state) {
-  return state.todos.reduce((maxId, todo) => {
-    return Math.max(todo.id, maxId)
-  }, -1) + 1
-}
-
-let reducer = function(state, action) {
-  switch (action.type) {
-    case 'ADD_TODO':
-      return Object.assign({}, state, {
-        todos: [{
-          text: action.text,
-          completed: false,
-          id: getId(state)
-        }, ...state.todos]
-      })
-    case 'COMPLETE_TODO':
-      return Object.assign({}, state, {
-        todos: state.todos.map((todo) => {
-          return todo.id === action.id ? 
-            Object.assign({}, todo, {completed: !todo.completed}) : todo
-        })
-      })
-    case 'DELETE_TODO':
-      return Object.assign({}, state, {
-        todos: state.todos.filter((todo) => {
-          return todo.id !== action.id
-        })
-      })
-    case 'INCREMENT_COUNT':
-      return Object.assign({}, state, {
-        count: state.count + 1
-      })  
-    default: 
-      return state;
-  }
-}
-
-export default reducer*/
-
 'use strict';
+
+import { combineReducers } from 'redux'
+import { REQUEST_POSTS, RECEIVE_POSTS, LOGIN_REQUEST, 
+  LOGIN_SUCCESS, LOGIN_FAILURE, POST_REQUEST, POST_SUCCESS, POST_FAILURE } from './actions'
 
 const mainReducer = (previousState, action) => {
   switch(action.type){
@@ -59,4 +23,71 @@ const mainReducer = (previousState, action) => {
   }
 }
 
-export default mainReducer
+// The auth reducer. The starting state sets authentication
+// based on a token being in local storage. In a real app,
+// we would also want a util to check if the token is expired.
+const auth = (state = {
+    isFetching: false,
+    isAuthenticated: localStorage.getItem('id_token') ? true : false
+  }, action) => {
+  switch (action.type) {
+    case LOGIN_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true,
+        isAuthenticated: false,
+        user: action.credentials
+      })
+    case LOGIN_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isAuthenticated: true,
+        errorMessage: ''
+      })
+    case LOGIN_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isAuthenticated: false,
+        errorMessage: action.message
+      })
+    case LOGOUT_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: true,
+        isAuthenticated: false
+      })
+    default:
+      return state
+  }
+}
+
+const posts = (state = {
+    isFetching: false,
+    posts: [],
+    authenticated: false}, action) {
+
+  switch (action.type) {
+    case POST_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true
+      })
+    case POST_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        posts: action.response,
+        authenticated: action.authenticated || false
+      })
+    case POST_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false
+      })
+    default:
+      return state
+  }
+}
+
+const fbApp = combineReducers({
+  mainReducer,
+  auth,
+  posts
+})
+
+export default fbApp

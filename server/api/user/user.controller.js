@@ -52,7 +52,8 @@ exports.create = function(req, res, next) {
       var token = jwt.sign({ _id: user._id }, config.secrets.session, {
         expiresIn: '60m'
       });
-      res.json({ token: token });
+      // adding user to response
+      res.json({ token: token, user: user });
     })
     .catch(validationError(res));
 };

@@ -1,5 +1,5 @@
 import { applyMiddleware, compose, createStore } from 'redux'
-import mainReducer from './reducer'
+import fbApp from './reducer'
 import logger from 'redux-logger'
 
 /*let finalCreateStore = compose(
@@ -14,7 +14,7 @@ export default function configureStore(initialState = { todos: [] }) {
 //console.log('reducer: ' + mainReducer)
 
 function configureStore(initialState = {token: null}){
-	return createStore(mainReducer, initialState);
+	return createStore(fbApp, initialState);
 }
 
 let initialState = {

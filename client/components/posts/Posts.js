@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import Post from '../post/Post'
+import store from '../../redux/store'
+import { fetchPosts } from '../../redux/actions'
 
 let Posts = new React.createClass({
 
@@ -16,6 +18,15 @@ let Posts = new React.createClass({
 				name: 'user two'
 			}]
 		}
+	},
+
+	componentDidMount(){
+		store.dispatch(fetchPosts())
+		console.log('store state after fetchPosts: ' + store.getState())
+	},
+
+	componentWillUnmount(){
+
 	},
 
 	render(){
