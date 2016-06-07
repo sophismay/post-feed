@@ -3,7 +3,7 @@ import { browserHistory, Router, Route, Link, withRouter } from 'react-router'
 import Auth  from '../../auth/auth'
 import { connect } from 'react-redux'
 import store from '../../redux/store'
-import { storeToken, setLoggedIn } from '../../redux/actions'
+import { storeToken, setLoggedIn, receiveLogin } from '../../redux/actions'
 import * as actionCreators from '../../redux/actions'
 import { bindActionCreators } from 'redux'
 import { Form } from 'formsy-react'
@@ -14,23 +14,11 @@ let Login = new React.createClass({
 
 	handleSubmit(data){
 		//e.preventDefault()
-		//console.log('data arg in handle: ' + JSON.stringify(data));
 		console.log('e arg in handle: ' + JSON.stringify(data));
 		this.setState({
 			type: 'info',
 			message: 'Sending info ...'
 		});
-		// fetch form data
-		/*let formData = {
-			email: this.state.email.trim(),
-			password: this.state.password.trim()
-		};*/
-
-		//TODO: better validation
-		/*if(formData.email === '' || formData.password === ''){
-			this.setState({type: 'error', message: 'Validation Error'});
-			return;
-		}*/
 
 		Auth.login(data, (err, res) => {
 			if(err || !res){
@@ -45,15 +33,15 @@ let Login = new React.createClass({
 			} else {
 				// TODO: clear form fields?
 				// store token and redirect user
-				//console.log('login route store: ' + JSON.stringify(this.props.route.store))
-				console.log('props store state before successful login: ' + JSON.stringify(this.props.state))
-				//let store = this.props.route.store
+				//console.log('props store state before successful login: ' + JSON.stringify(this.props.state))
 				store.dispatch(storeToken(res.body.token))
-				//console.log('passed route store state after storeToken dispatch: ' + JSON.stringify(store.getState()))
+				
+				// for auth, in the end, will use just one
 				store.dispatch(setLoggedIn(true))
-				//console.log('passed route store state after setLoggedIn dispatch: ' + JSON.stringify(store.getState()))
-				console.log('props store state after successful login: ' + JSON.stringify(this.props.state))
-				//this.setState({ loggedIn: true })
+				store.dispatch(receiveLogin(res.body))
+				localStorage.setItem('user', res.body)
+				localStorage.setItem('token', res.body.token)
+				console.log('localStorage: ' + JSON.stringify(localStorage))
 
 				const { location } = this.props
 

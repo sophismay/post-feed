@@ -25,13 +25,14 @@ const Input = React.createClass({
     // An error message is returned ONLY if the component is invalid
     // or the server has returned an error message
     const errorMessage = this.getErrorMessage();
+    const componentClass = this.props.componentClass ? this.props.componentClass : ''
 
     return (
     	<div className={className}>
 	    	<FormGroup>
 	      		<ControlLabel htmlFor={this.props.name}>{this.props.title}</ControlLabel>
 	      		<FormControl type={this.props.type || 'text'} placeholder={ this.props.placeholder }
-	      			name={this.props.name}
+	      			name={this.props.name} componentClass={componentClass}
 	          		onChange={this.changeValue}
 	          		value={this.getValue()}
 	          		checked={this.props.type === 'checkbox' && this.getValue() ? 'checked' : null} />

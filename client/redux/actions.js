@@ -1,7 +1,7 @@
 import store from './store'
 import fetch from 'isomorphic-fetch'
 import { CALL_API } from '../middleware/post'
-import { browserHistory } from 'react-redux'
+import { browserHistory } from 'react-router'
 
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
@@ -21,6 +21,10 @@ export const LOGOUT_FAILURE = 'LOGOUT_FAILURE'
 export const POST_REQUEST = 'POST_REQUEST'
 export const POST_SUCCESS = 'POST_SUCCESS'
 export const POST_FAILURE = 'POST_FAILURE'
+
+export const POST_FORM_REQUEST = 'POST_FORM_REQUEST'
+export const POST_FORM_SUCCESS = 'POST_FORM_SUCCESS'
+export const POST_FORM_FAILURE = 'POST_FORM_FAILURE'
 
 export const requestRegister = (credentials) => {
   return {
@@ -92,6 +96,29 @@ export const receiveLogout = () => {
   }
 }
 
+export const postRequest = (data) => {
+  return {
+    type: POST_REQUEST,
+    isSending: true,
+    data
+  }
+}
+
+export const postSuccess = (post) => {
+  return {
+    type: POST_SUCCESS,
+    isSending: false,
+    post
+  }
+}
+
+export const postFailure = (message) => {
+  return {
+    type: POST_FAILURE,
+    isSending: false,
+    message
+  }
+}
 
 export const storeToken = (token) => {
   return {
@@ -179,12 +206,9 @@ export const registerUser = (creds) => {
     headers: { 'Content-Type':'application/x-www-form-urlencoded' },
     body: `email=${creds.email}&password=${creds.password}&name=${creds.name}`
   }
-  console.log('called register user')
   return dispatch => {
     console.log('in curried call')
     dispatch(requestRegister(creds))
-    console.log('store state after requestRegister dispatch: ' + 
-      JSON.stringify(store.getState()))
 
     return fetch('http://localhost:3001/api/users', config)
       .then(response =>
@@ -217,9 +241,45 @@ export const logoutUser = () => {
     dispatch(requestLogout())
     localStorage.removeItem('token')
     dispatch(receiveLogout())
-
+    //console.log('after removing token from localStorage: ' + JSON.stringify(localStorage))
     browserHistory.push('/login')
   } 
+}
+
+/*export const createPost = () => {
+  return {
+    [CALL_API]: {
+      endpoint: '/posts',
+      authenticated: true,
+      types: [POST_REQUEST, POST_SUCCESS, POST_FAILURE]
+    }
+  }
+}*/
+
+export const createPost = (data) => {
+  return dispatch => {
+    console.log('inside creatPost curry')
+    dispatch(postRequest())
+    console.log('dispatched post form request')
+    data.userId = localStorage.getItem('user')._id
+    let config = {
+      method: 'POST',
+      body: data
+    }
+    return fetch('http://localhost:3001/api/posts', config)
+      .then(response => response.json().then(post => ({ post, response }))
+        ).then(({ post, response }) => {
+          if(!response.ok){
+            dispatch(postFailure(post.message))
+            return Promise.reject(post)
+          } else {
+
+          console.log('post successful: ' + JSON.stringify(post))
+          // Dispatch the success action
+          dispatch(postSuccess(post))
+        }
+      }).catch(err => console.log("Error: ", err))
+  }
 }
 
 // uses the middleware to get posts

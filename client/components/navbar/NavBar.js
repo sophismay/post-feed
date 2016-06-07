@@ -9,18 +9,20 @@ import { browserHistory } from 'react-router'
 let NavBar = new React.createClass({
 
 	logoutUser(e){
-		console.log('Clieckesf')
 		e.preventDefault()
 		logoutUser()(store.dispatch)
 	},
 	
 	render(){
-		let relevantNavItem = Auth.loggedIn() ? <NavDropdown eventKey={2} title="Account" id="basic-nav-dropdown">
-							<MenuItem eventKey={2.1}>Settings</MenuItem>
+		let whenLoggedIn = <div style={{padding:0,margin:0, float: 'left'}}>
+						<NavItem eventKey={2} href="/post/new">Post</NavItem>
+						<NavDropdown eventKey={3} title="Account" id="basic-nav-dropdown">
+							<MenuItem eventKey={3.1}>Settings</MenuItem>
 							<MenuItem divider />
-							
-							<MenuItem eventKey={2.3} onClick={this.logoutUser}>Logout</MenuItem>
-						</NavDropdown> : <NavItem eventKey={3} href="/login">Login</NavItem>;
+							<MenuItem eventKey={3.3} onClick={this.logoutUser}>Logout</MenuItem>
+						</NavDropdown>
+						</div>
+		let relevantNavItem = Auth.loggedIn() ? whenLoggedIn : <NavItem eventKey={3} href="/login">Login</NavItem>;
 		return(
 			<Navbar>
 				<Navbar.Header>
@@ -32,9 +34,7 @@ let NavBar = new React.createClass({
 					<NavItem eventKey={1} href="/home">Home</NavItem>
 
 					{ relevantNavItem }
-					
-
-					
+									
 				</Nav>
 			</Navbar>
 		)

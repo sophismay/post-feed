@@ -8,7 +8,6 @@ class Auth {
   }
 
   static loggedIn() {
-    //return store.getState().loggedIn
     return localStorage.token ? true : false
   }
 
@@ -23,7 +22,8 @@ class Auth {
   static requireLogin(nextState, replace){
 
     console.log('consoling imported store state: ' + JSON.stringify(store.getState()))
-    console.log('logged state wuithout this: ' + Auth.loggedIn())
+    console.log('logged state without this: ' + Auth.loggedIn())
+    console.log('localStorage before requiring login: ' + JSON.stringify(localStorage))
 
     if (!Auth.loggedIn()) { 
       console.log('not logged in, replacing')

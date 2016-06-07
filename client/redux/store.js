@@ -1,6 +1,9 @@
 import { applyMiddleware, compose, createStore } from 'redux'
+import thunkMiddleware from 'redux-thunk'
 import fbApp from './reducer'
 import logger from 'redux-logger'
+
+const loggerMiddleware = logger()
 
 /*let finalCreateStore = compose(
   applyMiddleware(logger())
@@ -11,10 +14,10 @@ export default function configureStore(initialState = { todos: [] }) {
   return finalCreateStore(reducer, initialState)
 }
 */
-//console.log('reducer: ' + mainReducer)
 
 function configureStore(initialState = {token: null}){
-	return createStore(fbApp);
+	return createStore(fbApp, 
+		applyMiddleware(thunkMiddleware, loggerMiddleware));
 }
 
 let initialState = {
@@ -23,7 +26,5 @@ let initialState = {
 }
 
 const store = configureStore(initialState)
-
-//console.log('getting init state: ' + JSON.stringify(store.getState()));
 
 export default store

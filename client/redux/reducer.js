@@ -42,6 +42,8 @@ const auth = (state = {
         user: action.credentials
       })
     case LOGIN_SUCCESS:
+      // also setting the logged in status in localStorage
+      localStorage.setItem('loggenIn', true)
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: true,
@@ -54,6 +56,7 @@ const auth = (state = {
         errorMessage: action.message
       })
     /*case LOGOUT_SUCCESS:
+      localStorage.setItem('loggedIn', false)
       return Object.assign({}, state, {
         isFetching: true,
         isAuthenticated: false

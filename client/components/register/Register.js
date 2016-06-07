@@ -20,51 +20,14 @@ let Register = new React.createClass({
 
 
 	handleSubmit(data) {
-		console.log('data in handle: ' + JSON.stringify(data));
 		this.setState({
 			type: 'info',
 			message: 'Sending info ...'
 		});
-		/*// fetch form data
-		let formData = {
-			email: this.state.email.trim(),
-			password: this.state.password.trim()
-		};*/
-		//TODO: better validation
-		/*if(formData.email === '' || formData.password === ''){
-			this.setState({type: 'error', message: 'Validation Error'});
-			return;
-		}*/
 
 		registerUser(data)(store.dispatch).then( () => {
-			console.log('I entered')
 			browserHistory.push('/home')
 		})
-
-		/*Auth.register(data, (err, res) => {
-			if(err || !res){
-				//TODO: handle error
-			} else{
-				// TODO: use redux store to store token
-				// tell store a token action has taken place
-				store.dispatch(storeToken(res.token));
-
-				console.log('store state: ' + JSON.stringify(store.getState()));
-				console.log('props: ' + JSON.stringify(this.props));
-
-				this.setState({
-					loggedIn: true
-				});
-				const { location } = this.props
-
-				if (location.state && location.state.nextPathname) {
-					browserHistory.push(location.state.nextPathname)
-				} else {
-					browserHistory.push('/home')
-				}
-				
-			}
-		});*/
 			
 	},
 
@@ -85,7 +48,7 @@ let Register = new React.createClass({
   	},
 
 	getInitialState(){
-		return{
+		return {
 			loggedIn: Auth.loggedIn(),
 			email: '',
 			password: '',
@@ -101,7 +64,7 @@ let Register = new React.createClass({
   	},
 
 	componentWillMount() {
-    	//Auth.onChange = this.updateAuth
+  
   	},
 
 	render() {
@@ -138,7 +101,6 @@ let Register = new React.createClass({
 });
 
 function mapStateToProps(state, props){
-	//return { token: state.token }
 	const { auth, mainReducer } = state
 	const { isFetching, isAuthenticated } = auth
 	const { token, loggedIn } = mainReducer

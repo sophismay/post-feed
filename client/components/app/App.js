@@ -23,8 +23,6 @@ let App = new React.createClass({
 
 function mapStateToProps(state, props){
 	const { dispatch } = state
-	//console.log('state')
-	//console.log(Object.keys(props))
 	return { 
 		
 	}

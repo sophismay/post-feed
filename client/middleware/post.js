@@ -1,7 +1,8 @@
 const BASE_URL = 'http://localhost:3001/api/'
+import Auth from '../auth/auth'
 
 function callApi(endpoint, authenticated) {
-
+  console.log('in callApi')
   let token = localStorage.getItem('id_token') || null
   let config = {}
 
@@ -10,6 +11,7 @@ function callApi(endpoint, authenticated) {
       config = {
         headers: { 'Authorization': `Bearer ${token}` }
       }
+      console.log('contains token setting hearders')
     }
     else {
       throw "No token saved!"
@@ -23,7 +25,7 @@ function callApi(endpoint, authenticated) {
       if (!response.ok) {
         return Promise.reject(text)
       }
-
+      console.log('in fetch 2nd then')
       return text
     }).catch(err => console.log(err))
 }
@@ -31,7 +33,7 @@ function callApi(endpoint, authenticated) {
 export const CALL_API = Symbol('Call API')
 
 export default store => next => action => {
-
+  console.log('in store - next- action curry')
   const callAPI = action[CALL_API]
 
   // So the middleware doesn't get applied to every single action
