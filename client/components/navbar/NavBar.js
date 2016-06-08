@@ -10,7 +10,8 @@ let NavBar = new React.createClass({
 
 	logoutUser(e){
 		e.preventDefault()
-		logoutUser()(store.dispatch)
+		store.dispatch(logoutUser())
+		//logoutUser()(store.dispatch)
 	},
 	
 	render(){

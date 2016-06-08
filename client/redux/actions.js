@@ -241,7 +241,6 @@ export const logoutUser = () => {
     dispatch(requestLogout())
     localStorage.removeItem('token')
     dispatch(receiveLogout())
-    //console.log('after removing token from localStorage: ' + JSON.stringify(localStorage))
     browserHistory.push('/login')
   } 
 }
@@ -260,15 +259,25 @@ export const createPost = (data) => {
   return dispatch => {
     console.log('inside creatPost curry')
     dispatch(postRequest())
+    let token = localStorage.getItem('token') || null
+    if(!localStorage.getItem('loggedIn') && !token){
+      // TODO: handle error, return
+      console.log('user not logged in')
+    }
+
     console.log('dispatched post form request')
     data.userId = localStorage.getItem('user')._id
+    console.log('user id: ' + data.userId)
     let config = {
       method: 'POST',
-      body: data
+      body: data,
+      headers: { 'Authorization': `Bearer ${token}` }
     }
     return fetch('http://localhost:3001/api/posts', config)
       .then(response => response.json().then(post => ({ post, response }))
         ).then(({ post, response }) => {
+          console.log('response ' + JSON.stringify(response))
+          console.log('post ' + JSON.stringify(response))
           if(!response.ok){
             dispatch(postFailure(post.message))
             return Promise.reject(post)
@@ -278,7 +287,15 @@ export const createPost = (data) => {
           // Dispatch the success action
           dispatch(postSuccess(post))
         }
-      }).catch(err => console.log("Error: ", err))
+      }).catch(err => {
+        // TODO: check status code of error before handling
+        console.log("Error: " + err)
+
+        // assuming 401 unauthorized always
+        //localStorage.removeItem('token')
+        localStorage.setItem('loggedIn', false)
+        dispatch(logoutUser())
+      })
   }
 }
 

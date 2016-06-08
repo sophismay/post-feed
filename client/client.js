@@ -21,7 +21,7 @@ render(
         <Route path='register' component={Register} onEnter={Auth.requireNotLoggedIn} />
         <Route path='login' component={Login}  onEnter={Auth.requireNotLoggedIn} />
         <Route path='home' component={Posts} onEnter={Auth.requireLogin} />
-        <Route path='new' component={PostForm} />
+        <Route path='new' component={PostForm} onEnter={Auth.requireLogin} />
         <Route path='*' component={NoMatch} />
       </Route>
     </Router>

@@ -32,7 +32,7 @@ const Input = React.createClass({
 	    	<FormGroup>
 	      		<ControlLabel htmlFor={this.props.name}>{this.props.title}</ControlLabel>
 	      		<FormControl type={this.props.type || 'text'} placeholder={ this.props.placeholder }
-	      			name={this.props.name} componentClass={componentClass}
+	      			name={this.props.name} componentClass={this.props.componentClass}
 	          		onChange={this.changeValue}
 	          		value={this.getValue()}
 	          		checked={this.props.type === 'checkbox' && this.getValue() ? 'checked' : null} />
