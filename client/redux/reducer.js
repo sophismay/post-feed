@@ -47,7 +47,7 @@ const auth = (state = {
         isFetching: action.isFetching,
         isAuthenticated: action.isAuthenticated,
         user: action.user,
-        token: action.token
+        token: action.token,
         errorMessage: ''
       })
     case LOGIN_FAILURE:
@@ -72,7 +72,7 @@ const auth = (state = {
       return Object.assign({}, state, {
         isFetching: action.isFetching,
         isAuthenticated: action.isAuthenticated,
-        user: action.user
+        user: action.user,
         errorMessage: ''
       })  
     case REGISTER_FAILURE:

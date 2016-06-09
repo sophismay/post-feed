@@ -29,7 +29,7 @@ let Posts = new React.createClass({
 
 	render(){
 		return (
-			<div>
+			<div className='container'>
 				{ this.state.posts.map( post => {
 					return <Post key={post._id} n={post.author} t={post.text} />
 				}) }

@@ -3,10 +3,12 @@ import React, { Component } from 'react'
 let Post = new React.createClass({
 	render(){
 		return (
-			<div>
-				<h3>{ this.props.n } </h3>
+			<div className='post-container'>
+				<h5><b>{ this.props.n }</b> </h5>
 				<p/>
-				<h3> { this.props.t } </h3>
+				<h5> { this.props.t } </h5>
+				<p/>
+				
 			</div>
 		)
 	}
