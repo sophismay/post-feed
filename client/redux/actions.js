@@ -45,7 +45,7 @@ export const receiveRegister = (user) => {
     type: REGISTER_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
-    token: user.token
+    user
   }
 }
 
@@ -129,14 +129,14 @@ export const postFailure = (message) => {
 export const fetchPostsRequest = () => {
   return {
     type: FETCH_POSTS_REQUEST,
-    isSending: true
+    isFetching: true
   }
 }
 
 export const fetchPostsSuccess = (posts) => {
   return {
     type: FETCH_POSTS_SUCCESS,
-    isSending: false,
+    isFetching: false,
     posts
   }
 }
@@ -144,7 +144,7 @@ export const fetchPostsSuccess = (posts) => {
 export const fetchPostsFailure = (message) => {
   return {
     type: FETCH_POSTS_REQUEST,
-    isSending: false,
+    isFetching: false,
     message
   }
 }

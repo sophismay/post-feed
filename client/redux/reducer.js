@@ -38,20 +38,22 @@ const auth = (state = {
   switch (action.type) {
     case LOGIN_REQUEST:
       return Object.assign({}, state, {
-        isFetching: true,
-        isAuthenticated: false,
-        user: action.credentials
+        isFetching: action.isFetching,
+        isAuthenticated: action.isAuthenticated,
+        credentials: action.credentials
       })
     case LOGIN_SUCCESS:
       return Object.assign({}, state, {
-        isFetching: false,
-        isAuthenticated: true,
+        isFetching: action.isFetching,
+        isAuthenticated: action.isAuthenticated,
+        user: action.user,
+        token: action.token
         errorMessage: ''
       })
     case LOGIN_FAILURE:
       return Object.assign({}, state, {
-        isFetching: false,
-        isAuthenticated: false,
+        isFetching: action.isFetching,
+        isAuthenticated: action.isAuthenticated,
         errorMessage: action.message
       })
     /*case LOGOUT_SUCCESS:
@@ -64,18 +66,19 @@ const auth = (state = {
       return Object.assign({}, state, {
         isFetching: true,
         isAuthenticated: false,
-        user: action.credentials
+        credentials: action.credentials
       })
     case REGISTER_SUCCESS:
       return Object.assign({}, state, {
-        isFetching: false,
-        isAuthenticated: true,
+        isFetching: action.isFetching,
+        isAuthenticated: action.isAuthenticated,
+        user: action.user
         errorMessage: ''
       })  
     case REGISTER_FAILURE:
       return Object.assign({}, state, {
-        isFetching: false,
-        isAuthenticated: false,
+        isFetching: action.isFetching,
+        isAuthenticated: action.isAuthenticated,
         errorMessage: action.message
       })    
     default:
@@ -105,15 +108,17 @@ const posts = (state = {
       })
     case FETCH_POSTS_REQUEST:
       return Object.assign({}, state, {
-        isFetching: true
+        isFetching: action.isFetching
       })   
     case FETCH_POSTS_SUCCESS:
       return Object.assign({}, state, {
-        isFetching: false
+        isFetching: action.isFetching,
+        posts: action.posts
       })  
     case FETCH_POSTS_FAILURE:
       return Object.assign({}, state, {
-        isFetching: false
+        isFetching: action.isFetching,
+        message: action.message
       })  
     default:
       return state
