@@ -4,6 +4,7 @@ import { createPost } from '../../redux/actions'
 import { Form } from 'formsy-react'
 import Input from '../input/Input'
 import { Button } from 'react-bootstrap'
+import { browserHistory } from 'react-router'
 
 let PostForm = new React.createClass({
 
@@ -17,6 +18,9 @@ let PostForm = new React.createClass({
 		//let obj = createPost()(store.dispatch)
 		//console.log(JSON.stringify(obj))
 		store.dispatch(createPost(data))
+			.then( () => {
+				browserHistory.push('/home')
+			})
 	},
 
 	enableButton() {

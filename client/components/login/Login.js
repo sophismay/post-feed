@@ -34,13 +34,22 @@ let Login = new React.createClass({
 				// TODO: clear form fields?
 				// store token and redirect user
 				//console.log('props store state before successful login: ' + JSON.stringify(this.props.state))
-				store.dispatch(storeToken(res.body.token))
+				let response = res.body
+				let token = response.token
+				let user = response.user
+				store.dispatch(storeToken(token))
 				
 				// for auth, in the end, will use just one
 				store.dispatch(setLoggedIn(true))
-				store.dispatch(receiveLogin(res.body))
-				localStorage.setItem('user', res.body)
-				localStorage.setItem('token', res.body.token)
+				store.dispatch(receiveLogin(response))
+				console.log('before storign user: ' + JSON.stringify(response))
+				localStorage.setItem('userId', user._id)
+				localStorage.setItem('userEmail', user.email)
+				localStorage.setItem('userName', user.name)
+				//localStorage.setItem('user', JSON.stringify(user))
+				console.log('after setting user in localStorage: ' 
+					+ JSON.stringify(localStorage.getItem('user')))
+				localStorage.setItem('token', token)
 				console.log('localStorage: ' + JSON.stringify(localStorage))
 
 				const { location } = this.props

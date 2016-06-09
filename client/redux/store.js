@@ -17,7 +17,8 @@ export default function configureStore(initialState = { todos: [] }) {
 
 function configureStore(initialState = {token: null}){
 	return createStore(fbApp, 
-		applyMiddleware(thunkMiddleware, loggerMiddleware));
+		compose(applyMiddleware(thunkMiddleware, loggerMiddleware),
+			 window.devToolsExtension ? window.devToolsExtension() : f => f));
 }
 
 let initialState = {

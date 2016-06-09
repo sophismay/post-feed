@@ -17,7 +17,12 @@ router.post('/', function(req, res, next) {
     }
 
     var token = auth.signToken(user._id, user.role);
-    res.json({ token: token });
+    //res.json({ token: token });
+    // changed to include user
+    user.salt = undefined
+    user.password = undefined
+    console.log('user after deleting: ' + JSON.stringify(user))
+    res.json({token: token, user: user})
   })(req, res, next)
 });
 

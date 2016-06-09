@@ -24,20 +24,19 @@ let Register = new React.createClass({
 			type: 'info',
 			message: 'Sending info ...'
 		});
-
+		console.log('Data to submit : ' + JSON.stringify(data))
 		registerUser(data)(store.dispatch).then( () => {
 			browserHistory.push('/home')
 		})
-			
 	},
 
-	handleEmailChange: function(e) {
+	/*handleEmailChange: function(e) {
     	this.setState({email: e.target.value});
   	},
 
   	handlePasswordChange: function(e) {
     	this.setState({password: e.target.value});
-  	},
+  	},*/
 
   	enableButton() {
   		this.setState({ canSubmit: true });

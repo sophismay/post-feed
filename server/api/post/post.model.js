@@ -8,7 +8,9 @@ let PostSchema = new Schema({
 	user: {
 		type: Schema.Types.ObjectId,
 		ref: 'User'
-	}
+	},
+	author: String,
+	created_at: Date
 })
 
 export default mongoose.model('Post', PostSchema)

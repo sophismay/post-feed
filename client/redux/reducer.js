@@ -3,7 +3,8 @@
 import { combineReducers } from 'redux'
 import { REQUEST_POSTS, RECEIVE_POSTS, LOGIN_REQUEST, 
   LOGIN_SUCCESS, LOGIN_FAILURE, POST_REQUEST, POST_SUCCESS, POST_FAILURE, 
-  REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE } from './actions'
+  REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE, FETCH_POSTS_REQUEST,
+  FETCH_POSTS_SUCCESS, FETCH_POSTS_FAILURE } from './actions'
 
 const mainReducer = (previousState = {
   token: null,
@@ -42,8 +43,6 @@ const auth = (state = {
         user: action.credentials
       })
     case LOGIN_SUCCESS:
-      // also setting the logged in status in localStorage
-      localStorage.setItem('loggenIn', true)
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: true,
@@ -78,8 +77,7 @@ const auth = (state = {
         isFetching: false,
         isAuthenticated: false,
         errorMessage: action.message
-      })  
-    // user should be stored in localStorage  
+      })    
     default:
       return state
   }
@@ -105,6 +103,18 @@ const posts = (state = {
       return Object.assign({}, state, {
         isFetching: false
       })
+    case FETCH_POSTS_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true
+      })   
+    case FETCH_POSTS_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false
+      })  
+    case FETCH_POSTS_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false
+      })  
     default:
       return state
   }

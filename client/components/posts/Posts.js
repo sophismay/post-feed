@@ -2,27 +2,25 @@ import React, { Component } from 'react'
 import Post from '../post/Post'
 import store from '../../redux/store'
 import { fetchPosts } from '../../redux/actions'
+import { browserHistory } from 'react-router'
 
 let Posts = new React.createClass({
 
 	getInitialState(){
 		return {
-			posts: [{
-				id: 1,
-				text: 'Some text here',
-				name: 'user one'
-			},
-			{
-				id: 2,
-				text: 'Another text here',
-				name: 'user two'
-			}]
+			posts: []
 		}
 	},
 
 	componentDidMount(){
-		//store.dispatch(fetchPosts())
-		//console.log('store state after fetchPosts: ' + store.getState())
+		store.dispatch(fetchPosts())
+			.then( (posts) => {
+				console.log('inside callback: ' + JSON.stringify(posts))
+				this.setState({
+					posts: posts
+				})
+			})
+		console.log('store state after fetchPosts: ' + JSON.stringify(store.getState()))
 	},
 
 	componentWillUnmount(){
@@ -33,7 +31,7 @@ let Posts = new React.createClass({
 		return (
 			<div>
 				{ this.state.posts.map( post => {
-					return <Post key={post.id} n={post.name} t={post.text} />
+					return <Post key={post._id} n={post.author} t={post.text} />
 				}) }
 			</div>
 			

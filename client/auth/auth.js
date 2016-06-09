@@ -71,6 +71,10 @@ class Auth {
     });
   }
 
+  static getUser(){
+    request.get('/auth')
+  }
+
   static getToken() {
     return localStorage.token
   }

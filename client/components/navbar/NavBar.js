@@ -16,7 +16,7 @@ let NavBar = new React.createClass({
 	
 	render(){
 		let whenLoggedIn = <div style={{padding:0,margin:0, float: 'left'}}>
-						<NavItem eventKey={2} href="/post/new">Post</NavItem>
+						<NavItem eventKey={2} href="/new">Post</NavItem>
 						<NavDropdown eventKey={3} title="Account" id="basic-nav-dropdown">
 							<MenuItem eventKey={3.1}>Settings</MenuItem>
 							<MenuItem divider />
@@ -28,7 +28,7 @@ let NavBar = new React.createClass({
 			<Navbar>
 				<Navbar.Header>
 					<Navbar.Brand>
-						<a href="#">Facebook Basic</a>
+						<a href="/home">Facebook Basic</a>
 					</Navbar.Brand>
 				</Navbar.Header>
 				<Nav pullRight>
