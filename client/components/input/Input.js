@@ -28,7 +28,7 @@ const Input = React.createClass({
 
     return (
     	<div className={className}>
-	    	<FormGroup>
+	    	<FormGroup bsSize={this.props.bsSize}>
 	      		<ControlLabel htmlFor={this.props.name}>{this.props.title}</ControlLabel>
 	      		<FormControl type={this.props.type || 'text'} placeholder={ this.props.placeholder }
 	      			name={this.props.name} componentClass={this.props.componentClass}

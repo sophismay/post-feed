@@ -4,7 +4,8 @@ import { combineReducers } from 'redux'
 import { REQUEST_POSTS, RECEIVE_POSTS, LOGIN_REQUEST, 
   LOGIN_SUCCESS, LOGIN_FAILURE, POST_REQUEST, POST_SUCCESS, POST_FAILURE, 
   REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE, FETCH_POSTS_REQUEST,
-  FETCH_POSTS_SUCCESS, FETCH_POSTS_FAILURE } from './actions'
+  FETCH_POSTS_SUCCESS, FETCH_POSTS_FAILURE, COMMENT_POST_REQUEST, 
+  COMMENT_POST_FAILURE, COMMENT_POST_SUCCESS } from './actions'
 
 const mainReducer = (previousState = {
   token: null,
@@ -120,6 +121,16 @@ const posts = (state = {
         isFetching: action.isFetching,
         message: action.message
       })  
+    case COMMENT_POST_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: action.isFetching,
+        comment: action.comment
+      }) 
+    case COMMENT_POST_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: action.isFetching,
+        comment: action.comment
+      })   
     default:
       return state
   }

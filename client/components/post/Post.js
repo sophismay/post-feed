@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import CommentsBox from '../commentsbox/CommentsBox'
 
 let Post = new React.createClass({
 	render(){
@@ -8,7 +9,7 @@ let Post = new React.createClass({
 				<p/>
 				<h5> { this.props.t } </h5>
 				<p/>
-				
+				<CommentsBox />
 			</div>
 		)
 	}

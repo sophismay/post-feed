@@ -31,6 +31,10 @@ export const FETCH_POSTS_REQUEST = 'FETCH_POSTS_REQUEST'
 export const FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS'
 export const FETCH_POSTS_FAILURE = 'FETCH_POSTS_FAILURE'
 
+export const COMMENT_POST_REQUEST = 'COMMENT_POST_REQUEST'
+export const COMMENT_POST_SUCCESS = 'COMMENT_POST_SUCCESS'
+export const COMMENT_POST_FAILURE = 'COMMENT_POST_FAILURE'
+
 export const requestRegister = (credentials) => {
   return {
     type: REGISTER_REQUEST,
@@ -149,6 +153,30 @@ export const fetchPostsFailure = (message) => {
   }
 }
 
+export const commentPostRequest = (comment) => {
+  return {
+    type: COMMENT_POST_REQUEST,
+    isFetching: true,
+    comment
+  }
+}
+
+export const commentPostSuccess = (comment) => {
+  return {
+    type: COMMENT_POST_SUCCESS,
+    isFetching: false,
+    comment
+  }
+}
+
+export const commentPostFailure = (message) => {
+  return {
+    type: COMMENT_POST_FAILURE,
+    isFetching: false,
+    message
+  }
+}
+
 export const storeToken = (token) => {
   return {
     type: 'STORE_TOKEN',
@@ -202,7 +230,7 @@ export const loginUser = (creds) => {
 
   let config = {
     method: 'POST',
-    headers: { 'Content-Type':'application/x-www-form-urlencoded' },
+    headers: { 'Contenct-Type':'application/x-www-form-urlencoded' },
     body: `email=${creds.email}&password=${creds.password}`
   }
 
@@ -390,6 +418,12 @@ export const fetchPosts = () => {
       types: [POST_REQUEST, POST_SUCCESS, POST_FAILURE]
     }
   }*/
+}
+
+export const commentPost = (data) => {
+  return dispatch => {
+    console.log('inside commentPost ')
+  }
 }
 
 /*// Uses the API middlware to get a post
