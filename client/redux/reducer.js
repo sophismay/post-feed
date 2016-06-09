@@ -131,6 +131,11 @@ const posts = (state = {
         isFetching: action.isFetching,
         comment: action.comment
       })   
+    case COMMENT_POST_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: action.isFetching,
+        message: action.message
+      })   
     default:
       return state
   }

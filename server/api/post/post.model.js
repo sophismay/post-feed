@@ -10,6 +10,12 @@ let PostSchema = new Schema({
 		ref: 'User'
 	},
 	author: String,
+	comments: [
+		{
+			comment: String,
+			name: String
+		}
+	],
 	created_at: Date
 })
 
