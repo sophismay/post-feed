@@ -10,5 +10,5 @@ A react posts feed with authentication.  Built with react, redux, express, boots
 ### Set Up ###
 * Clone the repository and 'cd' into folder
 * Run npm install to install dependencies
-* 
+* Run npm start to start express server and build webpack file
 
