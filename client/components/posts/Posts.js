@@ -33,7 +33,6 @@ let Posts = new React.createClass({
 					this.setState({
 						posts: newPosts
 					})
-					console.log('new set of posts ', this.state.posts)
 				}
 				
 			})

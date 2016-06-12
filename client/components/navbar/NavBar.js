@@ -10,8 +10,8 @@ let NavBar = new React.createClass({
 
 	logoutUser(e){
 		e.preventDefault()
-		store.dispatch(logoutUser())
-		//logoutUser()(store.dispatch)
+		let dispatch = store.dispatch
+		dispatch(logoutUser())
 	},
 	
 	render(){
@@ -28,7 +28,7 @@ let NavBar = new React.createClass({
 			<Navbar>
 				<Navbar.Header>
 					<Navbar.Brand>
-						<a href="/home">Facebook Basic</a>
+						<a href="/home">Basic Post Feed</a>
 					</Navbar.Brand>
 				</Navbar.Header>
 				<Nav pullRight>
@@ -43,13 +43,3 @@ let NavBar = new React.createClass({
 });
 
 export default NavBar
-
-/*if(Auth.isLoggedIn()){
-						<NavDropdown eventKey={2} title="Account" id="basic-nav-dropdown">
-							<MenuItem eventKey={2.1}>Settings</MenuItem>
-							<MenuItem divider />
-							<MenuItem eventKey={2.3} onClick={this.logoutUser}>Logout</MenuItem>
-						</NavDropdown>
-					} else {
-						<NavItem eventKey={3} href="/login">Login</NavItem>
-					}*/

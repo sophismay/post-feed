@@ -34,7 +34,7 @@ const mainReducer = (previousState = {
 // we would also want a util to check if the token is expired.
 const auth = (state = {
     isFetching: false,
-    isAuthenticated: localStorage.getItem('id_token') ? true : false
+    isAuthenticated: localStorage.getItem('token') ? true : false
   }, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:

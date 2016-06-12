@@ -212,16 +212,6 @@ export const receivePosts = (posts) => {
   }
 }
 
-/*export const fetchPosts = () => {
-  
-  return dispatch => {
-    store.dispatch(requestPosts())
-    return fetch('http://localhost:3001/api/posts')
-      .then(response => response.json())
-      .then(json => store.dispatch(receivePosts(json)))
-  }
-}*/
-
 
 // Calls the API to get a token and
 // dispatches actions along the way
@@ -329,11 +319,7 @@ export const createPost = (data) => {
       console.log('user not logged in')
     }
 
-    //console.log('localStorage: ' + JSON.stringify(localStorage.getItem('user')))
-    //data.userId = localStorage.getItem('user')._id
     data = Object.assign(data, data, {user: userId, author: userName})
-    //console.log('user id: ' + data.user._id)
-    //console.log('post data after assigning user: ' + JSON.stringify(data))
     let config = {
       method: 'POST',
       body: JSON.stringify(data),
@@ -359,12 +345,7 @@ export const createPost = (data) => {
           dispatch(postSuccess(post))
         }
       }).catch(err => {
-        // TODO: check status code of error before handling
         console.log("Error: " + JSON.stringify(err))
-
-        // assuming 401 unauthorized always
-        //localStorage.removeItem('token')
-        //localStorage.setItem('loggedIn', false)
         dispatch(logoutUser())
       })
   }
@@ -460,9 +441,6 @@ export const commentPost = (data) => {
     return fetch(POST_API + '/' + data.postId + '/reply', config)
       .then(response => response.json().then(post => ({post, response })))
       .then(({ post, response }) => {
-        //console.log('response from comment post : ' + JSON.stringify(post));
-        //console.log('response itself : ', response);
-
         if(!response.ok){
           console.log('response was not okay?')
           dispatch(commentPostFailure(post.message))
@@ -471,7 +449,6 @@ export const commentPost = (data) => {
           console.log('comment post successful: ' + JSON.stringify(post))
 
           dispatch(commentPostSuccess(post))
-          // TODO: set state in caller componentDidMount
           return Promise.resolve(post)
         }
       }).catch( (err) => {

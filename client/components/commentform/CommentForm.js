@@ -28,10 +28,6 @@ let CommentForm = new React.createClass({
 		}
 	},
 
-	componentDidMount(){
-		//let dispatch = this.props.store.dispatch
-	},
-
 	render(){
 		return (
 			<div>
