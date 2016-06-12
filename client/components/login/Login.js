@@ -44,7 +44,6 @@ let Login = new React.createClass({
 				const { location } = this.props
 
 				if (location.state && location.state.nextPathname) {
-					console.log('using next pathname: ' + location.state.nextPathname)
 					browserHistory.push(location.state.nextPathname)
 				} else {
 					console.log('using home')
