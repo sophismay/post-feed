@@ -8,7 +8,7 @@ class Auth {
   }
 
   static loggedIn() {
-    return localStorage.token ? true : false
+    return localStorage.getItem('token') ? true : false
   }
 
   static requireNotLoggedIn(nextState, replace){

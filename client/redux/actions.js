@@ -301,6 +301,7 @@ export const logoutUser = () => {
     
     dispatch(requestLogout())
     localStorage.removeItem('token')
+    localStorage.setItem('loggedIn', false)
     dispatch(receiveLogout())
     browserHistory.push('/login')
   } 
@@ -363,7 +364,7 @@ export const createPost = (data) => {
 
         // assuming 401 unauthorized always
         //localStorage.removeItem('token')
-        localStorage.setItem('loggedIn', false)
+        //localStorage.setItem('loggedIn', false)
         dispatch(logoutUser())
       })
   }
@@ -394,12 +395,23 @@ export const fetchPosts = () => {
     }
     
     return fetch(POST_API, config)
-      .then(response => response.json().then(posts => ({posts, response })))
+      .then(response => 
+        response.status === 401 ? 
+          dispatch(logoutUser()) : 
+          response.json().then(posts => ({posts, response }))
+      )
       .then(({ posts, response }) => {
+        if(response.status == 401){
+          dispatch(fetchPostsFailure('unauthorized'))
+          dispatch(logoutUser())
+          return Promise.reject()
+        }
+        console.log('response status: ' + response.status)
         console.log('response from fetch posts : ' + JSON.stringify(posts))
         if(!response.ok){
+          console.log('resonse not ok: ' + response)
           dispatch(fetchPostsFailure(posts.message))
-          return Promise.reject(post)
+          return Promise.reject(posts)
         } else {
           console.log('fetch successful: ' + JSON.stringify(posts))
 
@@ -423,6 +435,49 @@ export const fetchPosts = () => {
 export const commentPost = (data) => {
   return dispatch => {
     console.log('inside commentPost ')
+    dispatch(commentPostRequest(data))
+
+    let token = localStorage.getItem('token') || null
+    let userName = localStorage.getItem('userName')
+    let userId = localStorage.getItem('userId')
+    data = Object.assign(data, data, {user: userId, name: userName})
+    let config
+    if(token){
+      config = {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}` 
+        }
+      }
+    } else {
+      //TODO: handle error
+      browserHistory.push('/login')
+    }
+
+    return fetch(POST_API + '/' + data.postId + '/reply', config)
+      .then(response => response.json().then(post => ({post, response })))
+      .then(({ post, response }) => {
+        //console.log('response from comment post : ' + JSON.stringify(post));
+        //console.log('response itself : ', response);
+
+        if(!response.ok){
+          console.log('response was not okay?')
+          dispatch(commentPostFailure(post.message))
+          return Promise.reject({error: post.message})
+        }else {
+          console.log('comment post successful: ' + JSON.stringify(post))
+
+          dispatch(commentPostSuccess(post))
+          // TODO: set state in caller componentDidMount
+          return Promise.resolve(post)
+        }
+      }).catch( (err) => {
+        console.log('error caught ', err)
+      })
+
   }
 }
 

@@ -40,7 +40,20 @@ const reply = (req, res, next) => {
 		if(err) return handleError(res, { err: err }, 400)
 		if(!post) return handleError(res, { err: err }, 404)
 
-		// populate post comments	
+		// add comments to post
+		let commentData = {
+			comment: req.body.comment,
+			name: req.body.name
+		}
+		Object.assign(post, post, post.comments = [
+				...post.comments, commentData
+			])
+		console.log('post after using Object assign: ' + JSON.stringify(post))
+		//post.comments.push(commentData)
+		post.save( (err) => {
+			if(err) return handleError(res, { err: err }, 400)
+			return res.status(201).json(post)	
+		})
 	})
 }
 

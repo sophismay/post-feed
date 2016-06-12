@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
 import Post from '../post/Post'
 import store from '../../redux/store'
-import { fetchPosts } from '../../redux/actions'
+import { fetchPosts, commentPost } from '../../redux/actions'
 import { browserHistory } from 'react-router'
 
 let Posts = new React.createClass({
+
+	handleCommentSubmit(){
+		// TODO: make post comment request, receive post and update list of posts
+
+	},
 
 	getInitialState(){
 		return {
@@ -31,7 +36,7 @@ let Posts = new React.createClass({
 		return (
 			<div className='container'>
 				{ this.state.posts.map( post => {
-					return <Post key={post._id} n={post.author} t={post.text} />
+					return <Post key={post._id} post={post}/>
 				}) }
 			</div>
 			

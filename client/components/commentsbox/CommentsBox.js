@@ -12,7 +12,10 @@ let CommentsBox = new React.createClass({
 	render(){
 		return (
 			<div>
-				<CommentForm />
+				<CommentForm postId={this.props.postId} />
+				{ this.props.comments.map( comment => {
+					return <div><span> <b>{comment.name}</b> {comment.comment} </span></div>
+				})}
 			</div>
 		)
 	}
