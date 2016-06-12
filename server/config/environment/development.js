@@ -5,7 +5,7 @@
 module.exports = {
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://localhost/react-components'
+    uri: 'mongodb://localhost/basic-feed'
   },
   sequelize: {
     uri: 'sqlite://',

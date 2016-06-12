@@ -13,14 +13,9 @@ var mongoStore = connectMongo(session);
 export default function(app){
 	
 	app.use(compression());
-  	app.use(bodyParser.urlencoded({ extended: false }));
-  	app.use(bodyParser.json());
-	// for tk3	
-	app.use(bodyParser.urlencoded({ extended: true }));
-	app.use(bodyParser.raw({ type: 'image/bmp', limit: '50mb' }))
-	//app.use(bodyParser({limit: '50mb'}));
-	// end for tk3
-  	app.use(methodOverride());
+	app.use(bodyParser.urlencoded({ extended: false }));
+	app.use(bodyParser.json());
+	app.use(methodOverride());
  	app.use(cookieParser());
 
  	 // Persist sessions with mongoStore / sequelizeStore
