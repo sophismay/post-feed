@@ -10,7 +10,8 @@ let Post = new React.createClass({
 				<p/>
 				<h5> { post.text } </h5>
 				<p/>
-				<CommentsBox postId={post._id} comments={post.comments}/>
+				<CommentsBox postId={post._id} comments={post.comments} 
+					onCommentSubmit={this.props.onCommentSubmit}/>
 			</div>
 		)
 	}

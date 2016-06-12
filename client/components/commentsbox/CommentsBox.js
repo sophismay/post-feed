@@ -12,7 +12,8 @@ let CommentsBox = new React.createClass({
 	render(){
 		return (
 			<div>
-				<CommentForm postId={this.props.postId} />
+				<CommentForm postId={this.props.postId} 
+					onCommentSubmit={this.props.onCommentSubmit} />
 				{ this.props.comments.map( comment => {
 					return <div><span> <b>{comment.name}</b> {comment.comment} </span></div>
 				})}
