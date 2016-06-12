@@ -15,9 +15,9 @@ let NavBar = new React.createClass({
 	},
 	
 	render(){
-		let whenLoggedIn = <div style={{padding:0,margin:0, float: 'left'}}>
-						<NavItem eventKey={2} href="/new">Post</NavItem>
-						<NavDropdown eventKey={3} title="Account" id="basic-nav-dropdown">
+		let whenLoggedIn = <div className="relevant-nav-item">
+						<NavItem className="nav-item" eventKey={2} href="/new">Post</NavItem>
+						<NavDropdown className="nav-item" eventKey={3} title="Account" id="basic-nav-dropdown">
 							<MenuItem eventKey={3.1}>Settings</MenuItem>
 							<MenuItem divider />
 							<MenuItem eventKey={3.3} onClick={this.logoutUser}>Logout</MenuItem>
