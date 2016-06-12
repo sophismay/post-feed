@@ -9,7 +9,7 @@ let CommentForm = new React.createClass({
 
 	handleSubmit(data){
 		this.props.onCommentSubmit(data, this.props.postId)
-		this.setState({comment: ''})
+		this.setState({comment: undefined})
 	},
 
 	enableButton() {
