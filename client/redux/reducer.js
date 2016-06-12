@@ -57,12 +57,6 @@ const auth = (state = {
         isAuthenticated: action.isAuthenticated,
         errorMessage: action.message
       })
-    /*case LOGOUT_SUCCESS:
-      localStorage.setItem('loggedIn', false)
-      return Object.assign({}, state, {
-        isFetching: true,
-        isAuthenticated: false
-      })*/
     case REGISTER_REQUEST:
       return Object.assign({}, state, {
         isFetching: true,

@@ -5,17 +5,8 @@ import logger from 'redux-logger'
 
 const loggerMiddleware = logger()
 
-/*let finalCreateStore = compose(
-  applyMiddleware(logger())
-)(createStore)
-
-
-export default function configureStore(initialState = { todos: [] }) {
-  return finalCreateStore(reducer, initialState)
-}
-*/
-
 function configureStore(initialState = {token: null}){
+	// create store including middleware. include redux dev tools extension also
 	return createStore(fbApp, 
 		compose(applyMiddleware(thunkMiddleware, loggerMiddleware),
 			 window.devToolsExtension ? window.devToolsExtension() : f => f));

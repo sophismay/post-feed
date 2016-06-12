@@ -14,13 +14,9 @@ let PostForm = new React.createClass({
 			type: 'info',
 			message: 'Sending info ...'
 		});
-
-		//let obj = createPost()(store.dispatch)
-		//console.log(JSON.stringify(obj))
-		store.dispatch(createPost(data))
-			.then( () => {
-				browserHistory.push('/home')
-			})
+		let dispatch = store.dispatch
+		dispatch(createPost(data))
+			.then( () => { browserHistory.push('/home') })
 	},
 
 	enableButton() {

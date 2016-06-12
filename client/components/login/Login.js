@@ -13,8 +13,6 @@ import { Button } from 'react-bootstrap'
 let Login = new React.createClass({
 
 	handleSubmit(data){
-		//e.preventDefault()
-		console.log('e arg in handle: ' + JSON.stringify(data));
 		this.setState({
 			type: 'info',
 			message: 'Sending info ...'
@@ -22,8 +20,6 @@ let Login = new React.createClass({
 
 		Auth.login(data, (err, res) => {
 			if(err || !res){
-				//TODO: handle error
-				// clear form fields and set error message
 				this.setState({
 					email: '',
 					password: '',
@@ -31,9 +27,7 @@ let Login = new React.createClass({
 					message: 'Invalid email or password'
 				});
 			} else {
-				// TODO: clear form fields?
 				// store token and redirect user
-				//console.log('props store state before successful login: ' + JSON.stringify(this.props.state))
 				let response = res.body
 				let token = response.token
 				let user = response.user
@@ -42,15 +36,10 @@ let Login = new React.createClass({
 				// for auth, in the end, will use just one
 				store.dispatch(setLoggedIn(true))
 				store.dispatch(receiveLogin(response))
-				console.log('before storign user: ' + JSON.stringify(response))
 				localStorage.setItem('userId', user._id)
 				localStorage.setItem('userEmail', user.email)
 				localStorage.setItem('userName', user.name)
-				//localStorage.setItem('user', JSON.stringify(user))
-				console.log('after setting user in localStorage: ' 
-					+ JSON.stringify(localStorage.getItem('user')))
 				localStorage.setItem('token', token)
-				console.log('localStorage: ' + JSON.stringify(localStorage))
 
 				const { location } = this.props
 

@@ -32,7 +32,7 @@ let NavBar = new React.createClass({
 					</Navbar.Brand>
 				</Navbar.Header>
 				<Nav pullRight>
-					<NavItem eventKey={1} href="/home">Home</NavItem>
+					<NavItem eventKey={1} href="/home">Feed</NavItem>
 
 					{ relevantNavItem }
 									

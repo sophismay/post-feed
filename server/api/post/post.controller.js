@@ -7,14 +7,11 @@ const handleError = (res, err = null, status = 500) => {
 }
 
 const create = (req, res, next) => {
-	console.log('post create called: ' + JSON.stringify(req.body));
-	console.log('user: ' + JSON.stringify(Object.keys(req.body.user)))
   	let post = new Post(req.body);
   	post.created_at = Date.now()
   	post.comments = []
   	post.save( (err) => {
   		if(err) {
-  			console.log('error saving: ' + err.toString())
   			return handleError(res, { err: err }, 400)
   		}
 
@@ -23,8 +20,6 @@ const create = (req, res, next) => {
 }
 
 const show = (req, res, next) => {
-	console.log('show called ')
-	// populate posts with users
 	Post.find({}, (err, posts) => {
 		if(err) return handleError(res, { err: err }, 400)
 		if(!posts) return handleError(res, { err: err }, 404)
@@ -48,8 +43,6 @@ const reply = (req, res, next) => {
 		Object.assign(post, post, post.comments = [
 				...post.comments, commentData
 			])
-		console.log('post after using Object assign: ' + JSON.stringify(post))
-		//post.comments.push(commentData)
 		post.save( (err) => {
 			if(err) return handleError(res, { err: err }, 400)
 			return res.status(201).json(post)	

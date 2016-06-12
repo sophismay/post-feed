@@ -1,6 +1,5 @@
 import store from './store'
 import fetch from 'isomorphic-fetch'
-import { CALL_API } from '../middleware/post'
 import { browserHistory } from 'react-router'
 const POST_API = 'http://localhost:3001/api/posts' 
 
@@ -297,16 +296,6 @@ export const logoutUser = () => {
   } 
 }
 
-/*export const createPost = () => {
-  return {
-    [CALL_API]: {
-      endpoint: '/posts',
-      authenticated: true,
-      types: [POST_REQUEST, POST_SUCCESS, POST_FAILURE]
-    }
-  }
-}*/
-
 export const createPost = (data) => {
   return dispatch => {
     console.log('inside creatPost curry')
@@ -315,8 +304,7 @@ export const createPost = (data) => {
     let userId = localStorage.getItem('userId') || null
     let userName = localStorage.getItem('userName') || null
     if(!localStorage.getItem('loggedIn') && !token){
-      // TODO: handle error, return
-      console.log('user not logged in')
+      // TODO: handle error
     }
 
     data = Object.assign(data, data, {user: userId, author: userName})
@@ -371,7 +359,6 @@ export const fetchPosts = () => {
         }
       }
     } else {
-      //TODO: handle error
       browserHistory.push('/login')
     }
     
@@ -404,13 +391,6 @@ export const fetchPosts = () => {
         console.log("Error: " + JSON.stringify(err))
       })
   }
-  /*return {
-    [CALL_API]: {
-      endpoint: '',
-      authenticated: true,
-      types: [POST_REQUEST, POST_SUCCESS, POST_FAILURE]
-    }
-  }*/
 }
 
 export const commentPost = (data) => {
@@ -457,26 +437,3 @@ export const commentPost = (data) => {
 
   }
 }
-
-/*// Uses the API middlware to get a post
-export const fetchQuote = () => {
-  return {
-    [CALL_API]: {
-      endpoint: 'random-post',
-      types: [QUOTE_REQUEST, QUOTE_SUCCESS, QUOTE_FAILURE]
-    }
-  }
-}
-
-// Same API middlware is used to get a 
-// secret quote, but we set authenticated
-// to true so that the auth header is sent
-export const fetchSecretQuote = () => {
-  return {
-    [CALL_API]: {
-      endpoint: 'protected/random-quote',
-      authenticated: true,
-      types: [QUOTE_REQUEST, QUOTE_SUCCESS, QUOTE_FAILURE]
-    }
-  }
-}*/

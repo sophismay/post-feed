@@ -1,21 +1,29 @@
 # README #
 
 This README would normally document whatever steps are necessary to get your application up and running.
+=======
+# react-feed
+A react posts feed with authentication.  Built with react, redux, express, bootstrap, passport, nodejs and mongoDB
 
 ### What is this repository for? ###
 
 * Quick summary
 * Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
 ### How do I get set up? ###
 
 * Summary of set up
 * Configuration
+
+### Prerequisites ###
+ * Nodejs 
+ * npm
+
+### Set Up ###
+
+* Clone the repository and 'cd' into folder
+* Run npm install
 * Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
 
 ### Contribution guidelines ###
 
@@ -27,3 +35,4 @@ This README would normally document whatever steps are necessary to get your app
 
 * Repo owner or admin
 * Other community or team contact
+
