@@ -273,8 +273,8 @@ export const registerUser = (creds) => {
           // If register was successful, set the token in local storage
 
           localStorage.setItem('token', user.token)
-          localStorage.setItem('userId', user._id)
-          localStorage.setItem('userName', user.name)
+          localStorage.setItem('userId', user.user._id)
+          localStorage.setItem('userName', user.user.name)
           
           console.log('local storage: ' + JSON.stringify(localStorage))
           // Dispatch the success action
@@ -293,8 +293,11 @@ export const logoutUser = () => {
   return dispatch => {
     
     dispatch(requestLogout())
-    localStorage.removeItem('token')
-    localStorage.setItem('loggedIn', false)
+    Object.keys(localStorage).forEach( (key, index) => {
+      key === 'loggedIn' ? localStorage.setItem('loggedIn', false) : 
+        localStorage.removeItem(key)
+      
+    })
     dispatch(receiveLogout())
     browserHistory.push('/login')
   } 
