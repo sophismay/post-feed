@@ -1,7 +1,7 @@
 # README #
 
-# react-feed
-A react posts feed with authentication.  Built with react, redux, express, bootstrap, passport, nodejs and mongoDB
+# post-feed
+A posts feed example with authentication.  Built with react, redux, express, bootstrap, passport, nodejs and mongoDB
 
 ### Prerequisites ###
  * Nodejs (5.0.0 or higher)
