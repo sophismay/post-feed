@@ -273,12 +273,16 @@ export const registerUser = (creds) => {
           // If register was successful, set the token in local storage
 
           localStorage.setItem('token', user.token)
-          localStorage.setItem('user', user)
+          localStorage.setItem('userId', user._id)
+          localStorage.setItem('userName', user.name)
+          
           console.log('local storage: ' + JSON.stringify(localStorage))
           // Dispatch the success action
           dispatch(receiveRegister(user))
           console.log('store state after receiveRegister dispatch: ' + JSON.stringify(store.getState()))
           console.log('user after receiveRegister dispatch: ' + JSON.stringify(user))
+
+          return Promise.resolve()
         }
       }).catch(err => console.log("Error: ", err))
   }

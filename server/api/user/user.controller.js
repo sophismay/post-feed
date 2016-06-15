@@ -21,15 +21,26 @@ exports.create = function(req, res, next) {
   var newUser = new User(req.body);
   newUser.provider = 'local';
   newUser.role = 'user';
-  newUser.saveAsync()
+  console.log('before saveAsync', newUser)
+  newUser.save( (err, user) => {
+    if(err) { return validationError(res) }
+    var token = jwt.sign({ _id: user._id }, config.secrets.session, {
+        expiresIn: '60m'
+    }); 
+    return res.json({ token: token, user: newUser })
+  })
+  /*newUser.saveAsync()
     .spread(function(user) {
+      console.log('checking where')
       var token = jwt.sign({ _id: user._id }, config.secrets.session, {
         expiresIn: '60m'
       });
+      console.log('checking 2nd')
       // adding user to response
+      console.log('user ', user)
       res.json({ token: token, user: newUser });
     })
-    .catch(validationError(res));
+    .catch((err) => { console.log('validationError: ', err);validationError(res) });*/
 };
 
 /**
